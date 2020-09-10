@@ -20,6 +20,7 @@ namespace Keepr.Controllers
         {
             _ks = ks;
         }
+
         [HttpGet]
         public ActionResult<IEnumerable<Keep>> Get()
         {
@@ -33,8 +34,30 @@ namespace Keepr.Controllers
             };
         }
 
-        [HttpPost]
         [Authorize]
+        [HttpGet("user")]
+        public ActionResult<IEnumerable<Keep>> GetMyKeeps()
+        {
+            try
+            {
+                Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                if (user == null)
+                {
+                    throw new Exception("You must be logged in to create a keep");
+                }
+                return Ok(_ks.Get(user.Value));
+
+            }
+            catch (System.Exception err)
+            {
+                return BadRequest(err.Message);
+            }
+        }
+
+
+
+        [Authorize]
+        [HttpPost]
         public ActionResult<Keep> Post([FromBody] Keep newKeep)
         {
             try
@@ -49,5 +72,46 @@ namespace Keepr.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPut("{id}")]
+        public ActionResult<Keep> Edit(int id, [FromBody] Keep updatedKeep)
+        {
+            try
+            {
+                Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                if (user == null)
+                {
+                    throw new Exception("You must be logged in to edit a keep");
+                }
+                updatedKeep.UserId = user.Value;
+                updatedKeep.Id = id;
+                return Ok(_ks.Edit(updatedKeep));
+
+            }
+            catch (Exception err)
+            {
+                
+                return BadRequest(err.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public ActionResult<string> Delete(int id)
+        {
+            try
+            {
+                Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                if (user == null)
+                {
+                    throw new Exception("You must be logged in to delete a keep");
+                }
+                return Ok(_ks.Delete(user.Value, id));
+            }
+            catch (Exception err)
+            {
+                return BadRequest(err.Message);
+            }
+        }
     }
 }

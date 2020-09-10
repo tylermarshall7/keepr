@@ -20,6 +20,16 @@ export default new Router({
       name: "dashboard",
       component: Dashboard,
       beforeEnter: authGuard
-    }
+    },
+    {
+      path: "/keep/:keepId",
+      name: "KeepDetails",
+      component: KeepDetails
+    },
+    {path: "/vault/:vaultId",
+      name: "VaultDetails",
+      component: VaultDetails,
+      beforeEnter: authGuard
+  }
   ]
 });
