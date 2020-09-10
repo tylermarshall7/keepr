@@ -32,15 +32,15 @@ namespace Keepr.Repositories
       SELECT 
         k.*,
         vk.id as vaultKeepId
-        FROM vaultkeeps
+        FROM vaultkeeps vk
         INNER JOIN keeps k ON k.id = vk.keepId 
-        WHERE (vaultId = @vaultId AND vk.userId = @userId) ";
+        WHERE (vaultId = @vaultId AND vk.userId = @userId)";
       return _db.Query<VaultKeepViewModel>(sql, new { vaultId, userId });
     }
 
       internal VaultKeep GetById(int id, string userId)
     {
-      string sql = "SELECT * FROM vaultkeeps WHERE id = @id AND userId = @userId";
+      string sql = "SELECT * FROM vaultkeeps WHERE id = @id";
       return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
     }
 

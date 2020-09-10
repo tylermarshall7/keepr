@@ -29,9 +29,9 @@ namespace Keepr.Controllers
             {
                 return Ok(_ks.Get());
             }
-            catch (Exception e)
+            catch (Exception err)
             {
-                return BadRequest(e.Message);
+                return BadRequest(err.Message);
             };
         }
 

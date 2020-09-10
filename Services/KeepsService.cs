@@ -31,6 +31,9 @@ namespace Keepr.Services
             if (foundKeep == null)
             {
                 throw new Exception("not a valid keep id");
+            } else if (foundKeep.IsPrivate == true) 
+            {
+                throw new Exception("this keep is private");
             }
             return foundKeep;
         }

@@ -28,7 +28,7 @@ export default new Router({
   //   },
   //   {path: "/vault/:vaultId",
   //     name: "VaultDetails",
-  //     component: VaultDetails,
+  //     component: VaultDetails
   //     beforeEnter: authGuard
   // }
   ]
