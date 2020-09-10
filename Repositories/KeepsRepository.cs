@@ -35,7 +35,7 @@ namespace Keepr.Repositories
         }
 
 ///Create, Edit, Delete
-        internal Keep Create(Keep keepData)
+        internal Keep Create(Keep newKeep)
         {
         string sql = @"
             INSERT INTO keeps 
@@ -43,8 +43,8 @@ namespace Keepr.Repositories
             VALUES
             (@userId, @name, @description, @img, @isPrivate, @views, @shares, @keeps);
             SELECT LAST_INSERT_ID()";
-      keepData.Id = _db.ExecuteScalar<int>(sql, keepData);
-      return keepData;
+      newKeep.Id = _db.ExecuteScalar<int>(sql, newKeep);
+      return newKeep;
         }
 
         internal bool Edit(Keep updatedKeep)

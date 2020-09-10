@@ -21,15 +21,15 @@ export default new Router({
       component: Dashboard,
       beforeEnter: authGuard
     },
-    {
-      path: "/keep/:keepId",
-      name: "KeepDetails",
-      component: KeepDetails
-    },
-    {path: "/vault/:vaultId",
-      name: "VaultDetails",
-      component: VaultDetails,
-      beforeEnter: authGuard
-  }
+  //   {
+  //     path: "/keep/:keepId",
+  //     name: "KeepDetails",
+  //     component: KeepDetails
+  //   },
+  //   {path: "/vault/:vaultId",
+  //     name: "VaultDetails",
+  //     component: VaultDetails,
+  //     beforeEnter: authGuard
+  // }
   ]
 });

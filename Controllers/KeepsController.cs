@@ -21,6 +21,7 @@ namespace Keepr.Controllers
             _ks = ks;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Keep>> Get()
         {
@@ -54,7 +55,23 @@ namespace Keepr.Controllers
             }
         }
 
+        
+        [HttpGet("{id}")]
+        public ActionResult<Keep> GetById(int id)
+        {
+            try
+            {
+                return Ok(_ks.GetById(id));
+            }
+            catch (System.Exception err)
+            {
+                return BadRequest(err.Message);
+            };
+        }
 
+
+
+//////////////////////////////////////////////////////////////////
 
         [Authorize]
         [HttpPost]
@@ -62,13 +79,13 @@ namespace Keepr.Controllers
         {
             try
             {
-                var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                newKeep.UserId = userId;
+                var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                newKeep.UserId = userId.Value;
                 return Ok(_ks.Create(newKeep));
             }
-            catch (Exception e)
+            catch (System.Exception err)
             {
-                return BadRequest(e.Message);
+                return BadRequest(err.Message);
             }
         }
 
