@@ -24,7 +24,7 @@ namespace keepr.Controllers
 ///Getters
         [Authorize]
         [HttpGet]
-        public ActionResult<IEnumerable<Vault>> GetMyVaults()
+        public ActionResult<IEnumerable<Vault>> GetUserVaults()
         {
             try
             {

@@ -25,13 +25,13 @@ namespace Keepr.Services
             return _repo.GetByUserId(userId);
         }
 
-        public Keep GetById(int id)
+        public Keep GetById(int id, string userId)
         {
             Keep foundKeep = _repo.GetById(id);
             if (foundKeep == null)
             {
                 throw new Exception("not a valid keep id");
-            } else if (foundKeep.IsPrivate == true) 
+            } else if (foundKeep.IsPrivate == true && foundKeep.UserId != userId) 
             {
                 throw new Exception("this keep is private");
             }
@@ -48,7 +48,7 @@ namespace Keepr.Services
 
         public Keep Edit(Keep updatedKeep)
         {
-            Keep foundKeep = GetById(updatedKeep.Id);
+            Keep foundKeep = GetById(updatedKeep.Id, updatedKeep.UserId);
 
             updatedKeep.Name = updatedKeep.Name == null ? foundKeep.Name : updatedKeep.Name;
 
@@ -66,7 +66,7 @@ namespace Keepr.Services
 
         public string Delete(string userId, int id)
         {
-            GetById(id);
+            GetById(id, userId);
             bool deleted = _repo.Delete(userId, id);
             if (!deleted)
             {

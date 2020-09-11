@@ -1,4 +1,4 @@
--- USE YOUR-DB-HERE;
+-- -- USE YOUR-DB-HERE;
 
 -- CREATE TABLE vaults (
 --     id int NOT NULL AUTO_INCREMENT,
